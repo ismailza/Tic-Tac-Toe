@@ -28,6 +28,15 @@ a {
   align-items: center;
   margin: 10px 0;
 }
+.player-status {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.player-status p {
+  font-size: 18px;
+}
 .badge {
   background-color: #333;
   color: #fff;
