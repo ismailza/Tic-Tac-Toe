@@ -1,5 +1,12 @@
-// *
+// * Home page script
 
+// * Check if the user is coming from the game page
+if (window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) {
+  // refresh the page
+  window.location.reload();
+}
+
+// * Change the difficulty options based on the mode
 document.getElementsByName('mode').forEach((radio) => {
   radio.addEventListener('click', () => {
     if (radio.value === 'user-computer') {
@@ -13,6 +20,7 @@ document.getElementsByName('mode').forEach((radio) => {
   });
 });
 
+// * Start the game
 document.getElementById('start-btn').addEventListener('click', () => {
   // Check if the players' names are empty
   document.getElementsByName('mode').forEach((radio) => {
