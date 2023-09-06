@@ -11,11 +11,11 @@ const board = [
 const players = ['X', 'O'];
 // * Players' labels
 const playersLabel = [localStorage.getItem('player1'), localStorage.getItem('player2')];
+// * Players' scores
 const scores = [0, 0];
 
 // * Current player
 let currentPlayer = parseInt(localStorage.getItem('starts'));
-console.log(typeof currentPlayer);
 
 // * Setup the game
 const setup = () => {
@@ -26,41 +26,48 @@ const setup = () => {
   document.querySelector('.player-status #status').innerHTML = playersLabel[currentPlayer] + '\'s turn';
   // Add event listeners to each cell
   document.querySelectorAll('#board .item').forEach((item) => {
-    // Get the row and column of the clicked cell
-    item.addEventListener('click', (e) => {
-      // Make a move
-      if (makeMove(Math.floor(e.target.value / 3), e.target.value % 3, currentPlayer)) {
-        e.target.innerHTML = players[currentPlayer];
-        // Check if the game is over
-        if (isGameOver()) {
-          // Check if there is a winner
-          if (getWinner() !== null) {
-            scores[currentPlayer]++;
-            // Alert the winner
-            alert(playersLabel[currentPlayer] + ' wins!');
-          } else {
-            // Alert that there is a draw
-            alert('Draw!');
+    // Check if the mode is user-computer and it's the computer's turn
+    if ((localStorage.getItem('mode') !== 'user-computer') || (currentPlayer === 0)) {
+      // Get the row and column of the clicked cell
+      item.addEventListener('click', (e) => {
+        // Make a move
+        if (makeMove(Math.floor(e.target.value / 3), e.target.value % 3, currentPlayer)) {
+          // Make the move
+          e.target.innerHTML = players[currentPlayer];
+          // Check if the game is over
+          if (isGameOver()) {
+            // Check if there is a winner
+            if (getWinner() !== null) {
+              scores[currentPlayer]++;
+              // Alert the winner
+              alert(playersLabel[currentPlayer] + ' wins!');
+            } else {
+              // Alert that there is a draw
+              alert('Draw!');
+            }
+            // Update the score board
+            document.querySelector('.score-board #player-score' + currentPlayer).innerHTML = scores[currentPlayer];
+            resetBoard();
           }
-          // Update the score board
-          document.querySelector('.score-board #player-score' + currentPlayer).innerHTML = scores[currentPlayer];
-          resetBoard();
+          else {
+            // Update the player status
+            document.querySelector('.player-status #status').innerHTML = playersLabel[currentPlayer = (currentPlayer === 0) ? 1 : 0] + '\'s turn';
+            setTimeout(() => computerTurn(), 500);
+          }
         }
-        else {
-          // Update the player status
-          document.querySelector('.player-status #status').innerHTML = playersLabel[currentPlayer = (currentPlayer === 0) ? 1 : 0] + '\'s turn';
-          console.log(currentPlayer);
-        }
-      }
-    });
-    item.addEventListener('mouseover', (e) => {
-      if (board[Math.floor(e.target.value / 3)][e.target.value % 3] === '')
-        e.target.innerHTML = players[currentPlayer];
-    });
-    item.addEventListener('mouseout', (e) => {
-      if (board[Math.floor(e.target.value / 3)][e.target.value % 3] === '')
-        e.target.innerHTML = '';
-    });
+      });
+      item.addEventListener('mouseover', (e) => {
+        if (board[Math.floor(e.target.value / 3)][e.target.value % 3] === '')
+          e.target.innerHTML = players[currentPlayer];
+      });
+      item.addEventListener('mouseout', (e) => {
+        if (board[Math.floor(e.target.value / 3)][e.target.value % 3] === '')
+          e.target.innerHTML = '';
+      });
+    }
+    else {
+      setTimeout(() => computerTurn(), 500);
+    }
   });
   // Render the board
   renderBoard();
@@ -142,6 +149,136 @@ const getWinner = () => {
   return null;
 }
 
+// * Minimax algorithm
+const minimax = (board, depth, isMaximizing) => {
+  // Check if the game is over
+  if (isGameOver()) {
+    // Check if there is a winner
+    if (getWinner() !== null) {
+      // Return the score
+      return (getWinner() === 0) ? -10 + depth : 10 - depth;
+    }
+    // Return 0 if there is a draw
+    return 0;
+  }
+  // Check if the current player is maximizing
+  if (isMaximizing) {
+    // Initialize the best score
+    let bestScore = -Infinity;
+    // Iterate through each row in the board
+    for (let i = 0; i < 3; i++) {
+      // Iterate through each cell in the current row
+      for (let j = 0; j < 3; j++) {
+        // Check if the current cell is empty
+        if (board[i][j] === '') {
+          // Make a move
+          board[i][j] = players[1];
+          // Get the score for the current move
+          let score = minimax(board, depth + 1, false);
+          // Undo the move
+          board[i][j] = '';
+          // Check if the current score is better than the best score
+          if (score > bestScore) {
+            // Update the best score
+            bestScore = score;
+          }
+        }
+      }
+    }
+    // Return the best score
+    return bestScore;
+  }
+  // Check if the current player is minimizing
+  else {
+    // Initialize the best score
+    let bestScore = Infinity;
+    // Iterate through each row in the board
+    for (let i = 0; i < 3; i++) {
+      // Iterate through each cell in the current row
+      for (let j = 0; j < 3; j++) {
+        // Check if the current cell is empty
+        if (board[i][j] === '') {
+          // Make a move
+          board[i][j] = players[0];
+          // Get the score for the current move
+          let score = minimax(board, depth + 1, true);
+          // Undo the move
+          board[i][j] = '';
+          // Check if the current score is better than the best score
+          if (score < bestScore) {
+            // Update the best score
+            bestScore = score;
+          }
+        }
+      }
+    }
+    // Return the best score
+    return bestScore;
+  }
+}
+
+// * Get the best move for the computer
+const getBestMove = () => {
+  // Initialize the best score
+  let bestScore = -Infinity;
+  // Initialize the best move
+  let bestMove = {row: -1, col: -1};
+  // Iterate through each row in the board
+  for (let i = 0; i < 3; i++) {
+    // Iterate through each cell in the current row
+    for (let j = 0; j < 3; j++) {
+      // Check if the current cell is empty
+      if (board[i][j] === '') {
+        // Make a move
+        board[i][j] = players[1];
+        // Get the score for the current move
+        let score = minimax(board, localStorage.getItem('difficulty'), false);
+        // Undo the move
+        board[i][j] = '';
+        // Check if the current score is better than the best score
+        if (score > bestScore) {
+          // Update the best score
+          bestScore = score;
+          // Update the best move
+          bestMove.row = i;
+          bestMove.col = j;
+        }
+      }
+    }
+  }
+  // Return the best move
+  return bestMove;
+}
+
+// * Computer's turn
+const computerTurn = () => {
+  // Get the best move
+  const bestMove = getBestMove();
+  // Make a move
+  makeMove(bestMove.row, bestMove.col, 1);
+  // Render the board
+  renderBoard();
+  // Check if the game is over
+  if (isGameOver()) {
+    // Check if there is a winner
+    if (getWinner() !== null) {
+      scores[1]++;
+      // Alert the winner
+      alert(playersLabel[1] + ' wins!');
+    } else {
+      // Alert that there is a draw
+      alert('Draw!');
+    }
+    // Update the score board
+    document.querySelector('.score-board #player-score1').innerHTML = scores[1];
+    resetBoard();
+    setTimeout(() => computerTurn(), 500);
+  }
+  else {
+    // Update the player status
+    document.querySelector('.player-status #status').innerHTML = playersLabel[currentPlayer = (currentPlayer === 0) ? 1 : 0] + '\'s turn';
+  }
+}
 
 // * Play the game
 setup();
