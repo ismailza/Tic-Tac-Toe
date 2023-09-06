@@ -9,11 +9,13 @@ const board = [
 
 // * Players
 const players = ['X', 'O'];
-const playersLabel = ['User', 'Computer'];
+// * Players' labels
+const playersLabel = [localStorage.getItem('player1'), localStorage.getItem('player2')];
 const scores = [0, 0];
 
 // * Current player
-let currentPlayer = 0;
+let currentPlayer = parseInt(localStorage.getItem('starts'));
+console.log(typeof currentPlayer);
 
 // * Setup the game
 const setup = () => {
@@ -44,9 +46,11 @@ const setup = () => {
           document.querySelector('.score-board #player-score' + currentPlayer).innerHTML = scores[currentPlayer];
           resetBoard();
         }
-        else
+        else {
           // Update the player status
           document.querySelector('.player-status #status').innerHTML = playersLabel[currentPlayer = (currentPlayer === 0) ? 1 : 0] + '\'s turn';
+          console.log(currentPlayer);
+        }
       }
     });
     item.addEventListener('mouseover', (e) => {

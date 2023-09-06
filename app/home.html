@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+  <header class="header">
+    <h1>Tic Tac Toe</h1>
+  </header>
+  <div class="container">
+    <!-- * Game mode -->
+    <div class="section">
+      <h2>Choose Game Mode</h2>
+      <div class="grid-wrapper grid-col-auto">
+        <label for="mode1" class="radio-card">
+          <input type="radio" value="user-user" name="mode" id="mode1" checked />
+          <div class="card-content-wrapper">
+            <span class="check-icon"></span>
+            <div class="card-content">
+              <h4>User Vs User</h4>
+            </div>
+          </div>
+        </label>
+        <label for="mode2" class="radio-card">
+          <input type="radio" value="user-computer" name="mode" id="mode2" />
+          <div class="card-content-wrapper">
+            <span class="check-icon"></span>
+            <div class="card-content">
+              <h4>User VS Computer</h4>
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+    <!-- * Choose difficulty for computer (if mode is User VS Computer) -->
+    <div class="section hidden" id="difficulty">
+      <h2>Choose difficulty</h2>
+      <div class="grid-wrapper grid-col-auto">
+        <label for="easy" class="radio-card">
+          <input type="radio" name="difficulty" value="2" id="easy" checked />
+          <div class="card-content-wrapper">
+            <div class="card-content">
+              <h4>Easy</h4>
+            </div>
+          </div>
+        </label>
+        <label for="medium" class="radio-card">
+          <input type="radio" name="difficulty" value="4" id="medium" />
+          <div class="card-content-wrapper">
+            <div class="card-content">
+              <h4>Medium</h4>
+            </div>
+          </div>
+        </label>
+        <label for="hard" class="radio-card">
+          <input type="radio" name="difficulty" value="6" id="hard" />
+          <div class="card-content-wrapper">
+            <div class="card-content">
+              <h4>Hard</h4>
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+    <!-- * Players name -->
+    <div class="section" id="players-name">
+      <h2>Enter your name</h2>
+      <div class="grid-wrapper grid-col-auto">
+        <div class="input-wrapper">
+          <label for="player1-name">Player 1</label>
+          <input type="text" name="player1-name" id="player1-name" value="Player 1" placeholder="Player 1" />
+        </div>
+        <div class="input-wrapper">
+          <label for="player2-name">Player 2</label>
+          <input type="text" name="player2-name" id="player2-name" value="Player 2" placeholder="Player 2" />
+        </div>
+      </div>
+    </div>
+    <!-- * Choose who starts -->
+    <div class="section">
+      <h2>Choose who starts</h2>
+      <div class="grid-wrapper grid-col-auto">
+        <label for="player1" class="radio-card">
+          <input type="radio" value="0" name="starts" id="player1" checked />
+          <div class="card-content-wrapper">
+            <div class="card-content">
+              <h4 style="font-size: 30px;">X</h4>
+            </div>
+          </div>
+        </label>
+        <label for="player2" class="radio-card">
+          <input type="radio" value="1" name="starts" id="player2" />
+          <div class="card-content-wrapper">
+            <div class="card-content">
+              <h4 style="font-size: 30px;">0</h4>
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <button class="start-btn" id="start-btn">Start</button>
+  </div>
+  <footer class="footer">
+    <p>&copy; 2023. Created by <a href="https://ismailza.github.io/Portfolio" target="_blank">Ismail ZAHIR</a></p>
+  </footer>
+  <script src="js/home.js"></script>
+</body>
+</html>
