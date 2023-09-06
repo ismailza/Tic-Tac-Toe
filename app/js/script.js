@@ -52,7 +52,7 @@ const setup = () => {
           else {
             // Update the player status
             document.querySelector('.player-status #status').innerHTML = playersLabel[currentPlayer = (currentPlayer === 0) ? 1 : 0] + '\'s turn';
-            setTimeout(() => computerTurn(), 500);
+            setTimeout(() => computerTurn(), 10);
           }
         }
       });
@@ -66,7 +66,7 @@ const setup = () => {
       });
     }
     else {
-      setTimeout(() => computerTurn(), 500);
+      setTimeout(() => computerTurn(), 10);
     }
   });
   // Render the board
@@ -272,13 +272,74 @@ const computerTurn = () => {
     // Update the score board
     document.querySelector('.score-board #player-score1').innerHTML = scores[1];
     resetBoard();
-    setTimeout(() => computerTurn(), 500);
+    setTimeout(() => computerTurn(), 10);
   }
   else {
     // Update the player status
     document.querySelector('.player-status #status').innerHTML = playersLabel[currentPlayer = (currentPlayer === 0) ? 1 : 0] + '\'s turn';
   }
 }
+
+// * Restart the game
+document.querySelector('#restart-btn').addEventListener('click', () => {
+  // Reset the scores
+  scores[0] = 0;
+  scores[1] = 0;
+  // Update the score board
+  document.querySelector('.score-board #player-score0').innerHTML = scores[0];
+  document.querySelector('.score-board #player-score1').innerHTML = scores[1];
+  // Reset the board
+  resetBoard();
+  // Update the player status
+  document.querySelector('.player-status #status').innerHTML = playersLabel[currentPlayer = parseInt(localStorage.getItem('starts'))] + '\'s turn';
+  // Check if the mode is user-computer and it's the computer's turn
+  if ((localStorage.getItem('mode') === 'user-computer') && (currentPlayer === 1)) {
+    setTimeout(() => computerTurn(), 10);
+  }
+});
+
+// * Save the game
+document.querySelector('#save-btn').addEventListener('click', () => {
+  // Enter a name for the session
+  do {
+    var sessionName = prompt('Enter a name for the session:');
+    if (sessionName === null) return;
+    if (sessionName.trim() === '') alert('Session name cannot be empty. Please enter a valid name.');
+  } while (sessionName.trim() === '');
+  // Load existing saved sessions group from localStorage
+  let savedSessionsGroup = localStorage.getItem('Tic-Tac-Toe');
+  if (!savedSessionsGroup)
+    savedSessionsGroup = {};
+  else
+    savedSessionsGroup = JSON.parse(savedSessionsGroup);
+  // Save the game with the entered session name in the group
+  const gameState = {
+    name: sessionName,
+    board: board,
+    currentPlayer: currentPlayer,
+    scores: scores,
+    playersLabel: playersLabel,
+    mode: localStorage.getItem('mode'),
+    difficulty: localStorage.getItem('difficulty'),
+    date: new Date()
+  };
+  savedSessionsGroup[sessionName] = gameState;
+  // Store the updated group back in localStorage
+  localStorage.setItem('Tic-Tac-Toe', JSON.stringify(savedSessionsGroup));
+  // Alert that the game has been saved
+  alert('Game saved!');
+});
+
+// * Load all saved game sessions
+const getAllSavedGameSessions = () => {
+  // Load existing saved sessions group from localStorage
+  let savedSessionsGroup = localStorage.getItem('Tic-Tac-Toe');
+  if (!savedSessionsGroup)
+    return {};
+  else
+    return JSON.parse(savedSessionsGroup);
+};
+
 
 // * Play the game
 setup();

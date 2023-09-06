@@ -20,7 +20,8 @@ input {
   width: 100%;
 }
 .grid-wrapper {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   grid-gap: 30px;
   place-items: center;
   place-content: center;
