@@ -1,10 +1,4 @@
-// * Home page script
-
-// * Check if the user is coming from the game page
-if (window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) {
-  // refresh the page
-  window.location.reload();
-}
+// * Home page scripts
 
 // * Change the difficulty options based on the mode
 document.getElementsByName('mode').forEach((radio) => {

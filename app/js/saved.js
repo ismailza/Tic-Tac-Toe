@@ -97,7 +97,7 @@ const deleteSavedGameSession = (session) => {
   // Save the updated saved sessions group to localStorage
   localStorage.setItem('Tic-Tac-Toe', JSON.stringify(savedSessionsGroup));
   // Reload the page
-  location.reload();
+  window.location.reload();
 };
 
 // * Play a saved game session
