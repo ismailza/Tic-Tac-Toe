@@ -124,3 +124,39 @@ button.start-btn {
   cursor: pointer;
   transition: var(--transition);
 }
+
+table {
+  width: 100%;
+  margin: 10px 30px;
+}
+table thead tr th {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #c9c5c5;
+}
+table tbody tr td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #c9c5c5;
+}
+.btn {
+  padding: 5px 20px;
+  margin: 2px;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 16px;
+}
+.btn-danger {
+  background-color: #cf0303;
+}
+.btn-success {
+  background-color: #008d00;
+}

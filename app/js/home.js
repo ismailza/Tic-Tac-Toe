@@ -58,6 +58,14 @@ document.getElementById('start-btn').addEventListener('click', () => {
   // Get hwo starts
   const starts = document.querySelector('input[name="starts"]:checked').value;
   localStorage.setItem('starts', starts);
+  // Set game board
+  localStorage.setItem('board', JSON.stringify([
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""]
+  ]));
+  // Set scores
+  localStorage.setItem('scores', JSON.stringify([0, 0]));
   // Redirect to game page
   window.location.href = 'index.html';
 });

@@ -1,18 +1,14 @@
 // * Script for Tic-Tac-Toe game
 
 // * Board
-const board = [
-  ['', '', ''],
-  ['', '', ''],
-  ['', '', '']
-];
+const board = JSON.parse(localStorage.getItem('board'));
 
 // * Players
-const players = ['X', 'O'];
+const players = ["X", "O"];
 // * Players' labels
 const playersLabel = [localStorage.getItem('player1'), localStorage.getItem('player2')];
 // * Players' scores
-const scores = [0, 0];
+const scores = JSON.parse(localStorage.getItem('scores'));
 
 // * Current player
 let currentPlayer = parseInt(localStorage.getItem('starts'));
@@ -329,16 +325,6 @@ document.querySelector('#save-btn').addEventListener('click', () => {
   // Alert that the game has been saved
   alert('Game saved!');
 });
-
-// * Load all saved game sessions
-const getAllSavedGameSessions = () => {
-  // Load existing saved sessions group from localStorage
-  let savedSessionsGroup = localStorage.getItem('Tic-Tac-Toe');
-  if (!savedSessionsGroup)
-    return {};
-  else
-    return JSON.parse(savedSessionsGroup);
-};
 
 
 // * Play the game
