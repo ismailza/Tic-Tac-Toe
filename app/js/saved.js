@@ -55,7 +55,9 @@ const displayAllSavedGameSessions = () => {
       td.innerHTML = session;
       tr.appendChild(td);
       td = document.createElement('td');
-      td.innerHTML = savedSessionsGroup[session]['date'];
+      // format date
+      let date = new Date(savedSessionsGroup[session]['date']);
+      td.innerHTML = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
       tr.appendChild(td);
       td = document.createElement('td');
       td.innerHTML = savedSessionsGroup[session]['mode'];

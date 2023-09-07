@@ -124,21 +124,6 @@ button.start-btn {
   cursor: pointer;
   transition: var(--transition);
 }
-
-table {
-  width: 100%;
-  margin: 10px 30px;
-}
-table thead tr th {
-  text-align: left;
-  padding: 10px;
-  border-bottom: 1px solid #c9c5c5;
-}
-table tbody tr td {
-  text-align: left;
-  padding: 10px;
-  border-bottom: 1px solid #c9c5c5;
-}
 .btn {
   padding: 5px 20px;
   margin: 2px;
@@ -159,4 +144,109 @@ table tbody tr td {
 }
 .btn-success {
   background-color: #008d00;
+}
+table {
+  border-spacing: 1;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  width: 95%;
+  margin: 10px auto;
+  position: relative;
+}
+table * {
+  position: relative;
+}
+table td,
+table th {
+  padding-left: 5px;
+}
+table thead tr {
+  height: 50px;
+  background: #333;
+  font-size: 16px;
+  color: white;
+}
+table tbody tr {
+  height: 48px;
+  border-bottom: 1px solid #e3f1d5;
+}
+table tbody tr:last-child {
+  border: 0;
+}
+table td,
+table th {
+  text-align: left;
+}
+table td.l,
+table th.l {
+  text-align: right;
+}
+table td.c,
+table th.c {
+  text-align: center;
+}
+table td.r,
+table th.r {
+  text-align: center;
+}
+table tbody tr:nth-child(even) {
+  background-color: #e4e1ec;
+}
+table tbody tr:hover {
+  background-color: rgb(230, 228, 228);
+}
+@media screen and (max-width: 768px) {
+  table {
+    display: block;
+  }
+  table>*,
+  table tr,
+  table td,
+  table th {
+    display: block;
+  }
+  table thead {
+    display: none;
+  }
+  table tbody tr {
+    height: auto;
+    padding: 8px 0;
+  }
+  table tbody tr td {
+    padding-left: 45%;
+    margin-bottom: 12px;
+  }
+  table tbody tr td:last-child {
+    margin-bottom: 0;
+  }
+  table tbody tr td:before {
+    position: absolute;
+    font-weight: 700;
+    width: 40%;
+    left: 10px;
+    top: 0;
+  }
+    table tbody tr td:nth-child(1):before {
+      content: "Session name";
+    }
+    table tbody tr td:nth-child(2):before {
+      content: "Date";
+    }
+    table tbody tr td:nth-child(3):before {
+      content: "Mode";
+    }
+    table tbody tr td:nth-child(4):before {
+      content: "Player 1";
+    }
+    table tbody tr td:nth-child(5):before {
+      content: "Player 2";
+    }
+    table tbody tr td:nth-child(6):before {
+      content: "Current Player";
+    }
+    table tbody tr td:nth-child(7):before {
+      content: "Action";
+    }
 }
